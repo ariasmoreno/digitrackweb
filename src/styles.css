@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.list-style-none{
+  list-style: none;
+}
+
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+mat-form-field.mat-form-field {
+  font-size: 14px;
+}
+
+#mat-form-field-search .placeholder {
+  color:gray
+}
+
+
+html,
+body {
+  height: 100%;
+  background-color: white;
+}
+
+body {
+  margin     : 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.material-spacer {
+  flex: 1 1 auto;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.p10 {
+  width: 10% !important;
+}
+
+.p20 {
+  width: 20% !important;
+}
+
+.p30 {
+  width: 30% !important;
+}
+
+.p40 {
+  width: 40% !important;
+}
+
+.p50 {
+  width: 50% !important;
+}
+
+.p60 {
+  width: 60% !important;
+}
+
+.p70 {
+  width: 70% !important;
+}
+
+.p80 {
+  width: 80% !important;
+}
+
+.p90 {
+  width: 90% !important;
+}
+
+.p100 {
+  width: 100% !important;
+}
+
+.m5 {
+  margin: 5px !important;
+}
+
+.m10 {
+  margin: 10px !important;
+}
+
+.m15 {
+  margin: 15px !important;
+}
+
+.m20 {
+  margin: 20px !important;
+}
+
+.m-r20 {
+  margin-right: 20px !important;
+}
+
+.m30 {
+  margin: 30px !important;
+}
+
+.text-align-top {
+  vertical-align: top !important;
+}
+
+.text-align-top-right {
+  vertical-align: top !important;
+  text-align    : right !important
+}
+
+.green-color {
+  color: green !important;
+}
+
+.green-gray {
+  background-color: gray !important;
+}
+
+/* .mat-badge-content {
+  background: red;
+  color: blue;
+} */
+
+.green-icon {
+  color: green !important;
+}
+
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.green-icon svg {
+  fill: green !important;
+}
+
+  .ceu-fill-remaining-space {
+    /* This fills the remaining space, by using flexbox.
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }
+
+  .ceu-table{
+    width: 100%;
+  }
+
+  form.ceu-form {
+    width: 100%;
+  }
+
+  .controles-container {
+    width: 100%;
+    padding: 5%;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .modal-open .modal {
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .cdk-overlay-container {  /* estilo para prevenir que el contenido del material-select se muestre por detras del dialog */
+    z-index: 1051;
+  }
+

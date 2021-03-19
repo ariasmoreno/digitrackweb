@@ -1,0 +1,280 @@
+<!-- TOOL BAR-->
+<mat-toolbar class="bg-transparent">
+  <mat-toolbar-row>
+
+      <button (click)="setNewData()" mat-button data-dismiss="modal" data-toggle="modal" data-target="#modalForm">
+          <mat-icon>add</mat-icon>
+          New
+      </button>
+
+      <span class="material-spacer"></span>
+
+      <button class="text-info" mat-button data-dismiss="modal" data-toggle="modal" data-target="#FilterDialog">
+        <mat-icon>filter_alt</mat-icon>
+        Filter
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+ <!-- FILTERS -->
+ <div class="modal fade" id="FilterDialog" tabindex="-1" role="dialog"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+   <div class="modal-content">
+     <div class="modal-header bg-light p-2 m-0">
+       <h3 class="modal-title m-0">Filter</h3>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+      <form [formGroup]="Service.filterForm">
+
+        <mat-form-field class="full-width">
+          <input
+          formControlName="filterSex"
+          matInput name="filterSex"
+          placeholder="Sex">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Birth Date</mat-label>
+          <input matInput readonly
+          [matDatepicker]="pickerFilter"
+          formControlName="filterBirthDate"
+          matInput name="filterBirthDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerFilter"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFilter></mat-datepicker>
+          <mat-error *ngIf="Service.filterForm.controls['filterBirthDate'].errors?.maxDate"  class="float-right">Cannot be later than the current date.</mat-error>
+          </mat-form-field>
+
+        <button (click)="clearFilters()" class="float-right text-danger" mat-button>
+          <mat-icon>filter_alt</mat-icon>
+          clear filters
+        </button>
+
+       </form>
+     </div>
+     <div class="modal-footer">
+       <button class="m-2" mat-stroked-button data-dismiss="modal">Cancel</button>
+       <button (click)="filter()" [disabled]="Service.filterForm.invalid || (Service.loading$ | async)" data-dismiss="modal" mat-raised-button color='primary'>Filter</button>
+     </div>
+   </div>
+ </div>
+</div>
+
+  <!-- ELIMINAR -->
+  <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white p-2 m-0">
+          <h3 class="modal-title m-0">Delete</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label style="font-weight: 500">Are you sure you want to delete the Peron?</label>
+        </div>
+        <div class="modal-footer">
+          <button class="m-2" mat-stroked-button data-dismiss="modal">Cancel</button>
+          <button (click)="delete()" data-dismiss="modal" mat-raised-button color='warn'>Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="modal fade" id="modalForm" tabindex="-1" role="dialog"
+    aria-labelledby="modalFormTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header p-2 m-0 bg-light">
+          <h4 class="modal-title m-0" id="modalFormTitle">Person</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="Service.form">
+
+            <input type="hidden" formControlName="id">
+
+            <mat-form-field class="full-width">
+              <input  maxlength="60" formControlName="name" matInput name="name" placeholder="Name">
+              <mat-error class="float-right">This field is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input  maxlength="60" formControlName="lastName" matInput name="lastName" placeholder="Last Name">
+              <mat-error class="float-right">This field is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input
+              formControlName="cpf"
+              matInput name="cpf"
+              placeholder="CPF*"
+              maxlength="11">
+              <mat-error *ngIf="Service.form.controls['cpf'].errors?.required"  class="float-right">This field is required</mat-error>
+              <mat-error *ngIf="!Service.form.controls['cpf'].errors?.required"  class="float-right">Minimum 11 characters needed, only numbers</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input
+              formControlName="email"
+              matInput name="email"
+              placeholder="Email*">
+              <mat-error *ngIf="Service.form.controls['email'].errors?.required"  class="float-right">This field is required</mat-error>
+              <mat-error *ngIf="Service.form.controls['email'].errors?.pattern"  class="float-right">Email format is not valid</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Birth Date</mat-label>
+              <input matInput readonly
+              [matDatepicker]="picker"
+              formControlName="birthDate"
+              matInput name="birthDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="Service.form.controls['birthDate'].errors?.required"  class="float-right">This field is required</mat-error>
+              <mat-error *ngIf="Service.form.controls['birthDate'].errors?.maxDate"  class="float-right">Cannot be later than the current date.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input formControlName="sex" matInput name="sex" placeholder="Sex">
+              <mat-error class="float-right">This field is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input formControlName="phone" matInput name="phone" placeholder="Phone">
+              <mat-error *ngIf="Service.form.controls['phone'].errors?.pattern"  class="float-right">This field only allow numbers</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input formControlName="description" matInput name="description" placeholder="Description">
+            </mat-form-field>
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+
+          <mat-icon *ngIf="Service.loading$ | async">
+            <mat-spinner diameter="20" color="accent">
+            </mat-spinner>
+          </mat-icon>
+
+          <button class="m-2" mat-stroked-button data-dismiss="modal" >Cancelar</button>
+
+          <button class="m-2" (click)="existCpf()"  mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
+            *ngIf="transaccionIsNew">Save</button>
+
+          <button class="m-2" (click)="existCpf()"  mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
+            *ngIf="!transaccionIsNew" data-dismiss="modal" >Update</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--END FORMULARIO -->
+
+  <div *ngIf="dataSource.data.length > 0" >
+<div class="shadow-sm mb-5 bg-white rounded">
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-3">
+
+  <!-- email Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element">
+        <div> {{element.name}} <span class="ml-1">{{element.lastName}}</span></div>
+        <div class="d-flex align-items-start" style="color: gray;font-size: small;">
+           <div style="text-align: end;"><mat-icon class="mt-1 mr-1" style="font-size: 15px">email</mat-icon></div>
+           <div>{{element.email}}</div>
+      </div>
+      </td>
+  </ng-container>
+
+   <!-- sex Column -->
+   <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+   <!-- sex Column -->
+   <ng-container matColumnDef="sex">
+    <th mat-header-cell *matHeaderCellDef> Sex </th>
+    <td mat-cell *matCellDef="let element"> {{element.sex}} </td>
+  </ng-container>
+
+  <!-- cpf Column -->
+  <ng-container matColumnDef="cpf">
+    <th mat-header-cell *matHeaderCellDef> CPF </th>
+    <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+  </ng-container>
+
+   <!-- birthDate Column -->
+   <ng-container matColumnDef="birthDate">
+    <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.birthDate | date: 'dd/MM/yyyy'}} </td>
+  </ng-container>
+
+ <!-- registrationDate Column -->
+ <ng-container matColumnDef="registrationDate">
+  <th mat-header-cell *matHeaderCellDef>Date In</th>
+  <td mat-cell *matCellDef="let element">
+    {{element.registrationDate | date: 'dd/MM/yyyy'}}
+    </td>
+</ng-container>
+
+ <!-- updateDate Column -->
+ <ng-container matColumnDef="updateDate">
+  <th mat-header-cell *matHeaderCellDef>Date Up</th>
+  <td mat-cell *matCellDef="let element">
+    {{element.updateDate | date: 'dd/MM/yyyy'}}
+    </td>
+</ng-container>
+
+   <!-- commands Column -->
+  <ng-container matColumnDef="commands">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element;">
+
+
+      <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setDeleteData()" mat-icon-button
+        data-toggle="modal" data-target="#DeleteDialog" class="float-right">
+        <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
+      </button>
+
+      <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setUpdateData()' mat-icon-button
+      data-dismiss="modal" data-toggle="modal" data-target="#modalForm" class="float-right">
+        <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
+      </button>
+
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="page.totalElements"
+              [pageSize]="currentSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="pageEvent = $event; onPaginateChange($event)"
+        showFirstLastButtons>
+</mat-paginator>
+</div>
+</div>
+
+<div *ngIf="dataSource.data.length === 0" >
+  <div class="d-flex justify-content-center">
+  <div class="d-block justify-content-center">
+  <div><img width="200" src="../../../assets/img/not_data.jpg"></div>
+  <div class="d-flex justify-content-center m-2 text-danger"><h3>Not data found</h3></div>
+  </div>
+  </div>
+  </div>
